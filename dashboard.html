@@ -141,6 +141,28 @@
                 </div>
             </div>
 
+            <!-- Predictive Occupancy Section -->
+            <section class="prediction-section" style="margin: 2rem 0;">
+                <div id="predictionCard" class="prediction-card" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 1px solid rgba(109, 74, 255, 0.3); border-radius: 16px; padding: 1.5rem; position: relative; overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: #a78bfa; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 0.5rem 0;">
+                                <i class="fas fa-brain" style="margin-right: 6px;"></i>Predicted Occupancy (Next 10 Min)
+                            </h3>
+                            <div id="predictedValue" style="font-size: 2.8rem; font-weight: 800; color: #f8fafc; line-height: 1;">--%</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="color: rgba(255,255,255,0.5); font-size: 0.75rem;">Confidence</span>
+                            <div id="confidenceLabel" style="color: #a78bfa; font-size: 1.1rem; font-weight: 700;">--%</div>
+                        </div>
+                    </div>
+                    <div style="height: 80px; margin-bottom: 0.75rem;">
+                        <canvas id="predictionTrend"></canvas>
+                    </div>
+                    <div id="predictionStatus" style="color: rgba(255,255,255,0.4); font-size: 0.75rem; text-align: center;">Initializing prediction engine...</div>
+                </div>
+            </section>
+
             <!-- Gas Monitoring Section -->
             <section class="gas-monitoring">
                 <div class="gas-gauge-card">

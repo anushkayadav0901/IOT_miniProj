@@ -166,7 +166,8 @@ function createModel(inputShape) {
 */
 async function trainModel(model, X, y) {
   if (!model) return null;
-  // convert to tensors
+  // Ensure TF backend is ready before creating tensors
+  await tf.ready();
   const xs = tf.tensor2d(X);
   const ys = tf.tensor2d(y, [y.length, 1]);
 
@@ -350,9 +351,13 @@ function createOrUpdateTrendChart(labels, data) {
 
 /* -------------------- Main orchestration -------------------- */
 async function buildAndTrainIfNeeded() {
-  const feeds = lastFetchedFeeds || await fetchThingSpeakData();
-  if (!feeds || feeds.length < 20) {
-    console.warn('Not enough data to train');
+  // Fix: null is falsy but [] is truthy — check length explicitly
+  let feeds = (lastFetchedFeeds && lastFetchedFeeds.length > 0)
+    ? lastFetchedFeeds
+    : await fetchThingSpeakData();
+
+  if (!feeds || feeds.length < 5) {
+    console.warn('Not enough data to train (' + (feeds ? feeds.length : 0) + '/5 feeds)');
     return;
   }
 
@@ -448,14 +453,17 @@ window.PredictionEngine = {
   createModel
 };
 
-// If TF already loaded and DOM is ready, auto start (best effort)
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  // ensure tf exists
-  if (typeof tf !== 'undefined') {
-    setTimeout(() => startPredictionEngine(), 300);
+// Auto-init: retry until tf is available
+function _tryAutoStart() {
+  if (typeof tf === 'undefined') {
+    setTimeout(_tryAutoStart, 200);
+    return;
   }
+  startPredictionEngine();
+}
+
+if (document.readyState === 'complete') {
+  _tryAutoStart();
 } else {
-  window.addEventListener('DOMContentLoaded', () => {
-    if (typeof tf !== 'undefined') setTimeout(() => startPredictionEngine(), 300);
-  });
+  window.addEventListener('load', _tryAutoStart);
 }
