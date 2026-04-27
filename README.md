@@ -7,6 +7,10 @@ All sensor readings are updated live on a **modern web dashboard** featuring a *
 
 ---
 live demo - https://igdtuw-iot-project.netlify.app/
+<img width="1526" height="866" alt="image" src="https://github.com/user-attachments/assets/67c013b4-1cf3-4225-98cb-11b83900ac6a" />
+
+<img width="859" height="702" alt="image" src="https://github.com/user-attachments/assets/cc52f273-f9c6-451b-b42d-415bb2ecddb4" />
+
 
 ## 🎨 **UI Design Features**
 
